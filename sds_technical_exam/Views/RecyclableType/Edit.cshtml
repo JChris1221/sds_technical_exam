@@ -2,10 +2,17 @@
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Page.Title = "Add Recyclable Type";
+    Page.Title = "Edit Recyclable Type";
 }
-
-
+@{
+    if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["ErrorMessage"]
+        </div>
+    }
+}
+<div class="container-fluid">
     <div class="card">
         <div class="card-header">
             <h1 class="h3 mb-0 text-gray-800">Add Recyclable Type</h1>
@@ -13,6 +20,8 @@
         <div class="card-body">
             @using (Html.BeginForm())
             {
+                @Html.HiddenFor(m => m.RecyclableType.Id, new { @value = Model.RecyclableType.Id })
+
                 <div class="form-group">
                     @Html.LabelFor(m => m.RecyclableType.Type)
                     @Html.TextBoxFor(m => m.RecyclableType.Type, new { @class = "form-control", @value = Model.RecyclableType.Type })
@@ -36,9 +45,9 @@
                     @Html.TextBoxFor(m => m.RecyclableType.MaxKg, new { @class = "form-control", @value = Model.RecyclableType.MaxKg })
                     @Html.ValidationMessageFor(m => m.RecyclableType.MaxKg, "", new { @class = "field-validation-error text-danger" })
                 </div>
-                <button type="submit" class="btn btn-success mt-3">Add</button>
+                <button type="submit" class="btn btn-success">Save Changes</button>
             }
         </div>
     </div>
-    <!--/Form-->
-    <!-- /Content -->
+</div>
+

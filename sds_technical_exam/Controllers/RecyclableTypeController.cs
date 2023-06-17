@@ -26,5 +26,61 @@ namespace sds_technical_exam.Controllers
             rtv.RecyclableType = new RecyclableType();
             return View(rtv);
         }
+
+        [HttpPost]
+        public ActionResult Add(RecyclableTypeViewModel rtv)
+        {
+            if (ModelState.IsValid)
+            {
+                if (RecyclableTypeRepository.Add(rtv.RecyclableType) != 0)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(rtv);
+                }
+            }
+            else
+            {
+                return View(rtv);
+            }
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            RecyclableTypeViewModel rtv = new RecyclableTypeViewModel();
+            rtv.RecyclableType = RecyclableTypeRepository.GetEntityById(id);
+            if (rtv.RecyclableType != null)
+                return View(rtv);
+            else
+                return new HttpNotFoundResult();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(RecyclableTypeViewModel rtv)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (RecyclableTypeRepository.Update(rtv.RecyclableType))
+                    {
+                        ViewData["SuccessMessage"] = "Recyclable Type Updated";
+                        return RedirectToAction("Index");
+                    }
+                    ViewData["ErrorMessage"] = "Error Updating Recyclable Type";
+                    return View(rtv);
+                }
+                catch (Exception e){
+                    ViewData["ErrorMessage"] = e.Message;
+                    return View(rtv);
+                }
+            }
+            else
+            {
+                return View(rtv);
+            }
+        }
     }
 }
