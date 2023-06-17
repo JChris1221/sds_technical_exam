@@ -210,6 +210,32 @@ namespace sds_technical_exam.Data
         public bool Delete(int id)
         {
             bool flag = true;
+            int rowsAffected;
+            string query = "DELETE FROM Recyclable_Type where Id = @Id;";
+            var param = new Dictionary<string, object>()
+            {
+                { "@Id", id}
+            };
+
+            try
+            {
+                OpenDBConnection();
+
+                rowsAffected = ExecuteNonQuery(query, param);
+
+                CloseDBConnection();
+
+                if (rowsAffected == 0)
+                {
+                    flag = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLog.Exception = ex;
+                return false;
+            }
+
             return flag;
         }
         #endregion

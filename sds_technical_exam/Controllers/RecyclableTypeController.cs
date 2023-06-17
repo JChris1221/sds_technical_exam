@@ -34,6 +34,7 @@ namespace sds_technical_exam.Controllers
             {
                 if (RecyclableTypeRepository.Add(rtv.RecyclableType) != 0)
                 {
+                    TempData["SuccessMessage"] = "Record Succesfully Added";
                     return RedirectToAction("Index");
                 }
                 else
@@ -58,10 +59,11 @@ namespace sds_technical_exam.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(RecyclableTypeViewModel rtv)
+        public ActionResult Edit(int id, RecyclableTypeViewModel rtv)
         {
             if (ModelState.IsValid)
             {
+                rtv.RecyclableType.Id = id;
                 try
                 {
                     if (RecyclableTypeRepository.Update(rtv.RecyclableType))
@@ -72,7 +74,7 @@ namespace sds_technical_exam.Controllers
                     ViewData["ErrorMessage"] = "Error Updating Recyclable Type";
                     return View(rtv);
                 }
-                catch (Exception e){
+                catch (Exception e) {
                     ViewData["ErrorMessage"] = e.Message;
                     return View(rtv);
                 }
@@ -81,6 +83,34 @@ namespace sds_technical_exam.Controllers
             {
                 return View(rtv);
             }
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            RecyclableTypeViewModel rtv = new RecyclableTypeViewModel();
+            rtv.RecyclableType = RecyclableTypeRepository.GetEntityById(id);
+            if (rtv.RecyclableType != null)
+                return View(rtv);
+            else
+                return new HttpNotFoundResult();
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, RecyclableTypeViewModel rtv)
+        {
+            if (RecyclableTypeRepository.Delete(id))
+            {
+                TempData["SuccessMessage"] = "Record Deleted";
+            }
+            else
+            {
+                if (RecyclableTypeRepository.ErrorLog.Exception != null)
+                    TempData["ErrorMessage"] = RecyclableTypeRepository.ErrorLog.Exception.Message;
+                else
+                    TempData["ErrorMessage"] = "Error Deleting Record";
+            }
+            return RedirectToAction("Index");
         }
     }
 }

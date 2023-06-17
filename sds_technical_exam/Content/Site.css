@@ -18,3 +18,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.card-header-warning {
+    background-color: #ffc107;
+}

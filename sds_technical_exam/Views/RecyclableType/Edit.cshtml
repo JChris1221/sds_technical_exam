@@ -15,7 +15,7 @@
 <div class="container-fluid">
     <div class="card">
         <div class="card-header">
-            <h1 class="h3 mb-0 text-gray-800">Add Recyclable Type</h1>
+            <h1 class="h3 mb-0 text-gray-800">Edit Recyclable Type</h1>
         </div>
         <div class="card-body">
             @using (Html.BeginForm())
@@ -45,7 +45,7 @@
                     @Html.TextBoxFor(m => m.RecyclableType.MaxKg, new { @class = "form-control", @value = Model.RecyclableType.MaxKg })
                     @Html.ValidationMessageFor(m => m.RecyclableType.MaxKg, "", new { @class = "field-validation-error text-danger" })
                 </div>
-                <button type="submit" class="btn btn-success">Save Changes</button>
+                <button type="submit" class="btn btn-info">Save Changes</button>
             }
         </div>
     </div>
