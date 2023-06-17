@@ -2,8 +2,9 @@
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
-    Page.Title = "Add Recyclable Item";
+    Page.Title = "Delete Recyclable Item";
 }
+
 @{
     if (TempData["ErrorMessage"] != null)
     {
@@ -18,35 +19,38 @@
         </div>
     }
 }
-
+<div class="alert alert-danger" role="alert">
+    Are you sure you want to delete this data? (This action cannot be undone)
+</div>
 <div class="card">
     <div class="card-header">
-        <h1 class="h3 mb-0 text-gray-800">Add Recyclable Item</h1>
+        <h1 class="h3 mb-0 text-gray-800">DeleteRecyclable Item</h1>
     </div>
     <div class="card-body">
         @using (Html.BeginForm())
         {
             <div class="form-group">
                 @Html.LabelFor(m => m.RecyclableItem.RecyclableTypeId)
-                @Html.DropDownListFor(m => m.RecyclableItem.RecyclableTypeId, Model.RecyclableTypes, "Select Recyclable Type", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RecyclableItem.RecyclableTypeId, Model.RecyclableTypes, "Select Recyclable Type", new { @class = "form-control", @value = Model.RecyclableItem.RecyclableTypeId, @readonly = true})
                 @Html.ValidationMessageFor(m => m.RecyclableItem.RecyclableTypeId, "", new { @class = "field-validation-error text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.RecyclableItem.Weight)
-                @Html.TextBoxFor(m => m.RecyclableItem.Weight, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.RecyclableItem.Weight, new { @class = "form-control", @value = Model.RecyclableItem.Weight, @readonly = true })
                 @Html.ValidationMessageFor(m => m.RecyclableItem.Weight, "", new { @class = "field-validation-error text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(m => m.RecyclableItem.ItemDescription)
-                @Html.TextBoxFor(m => m.RecyclableItem.ItemDescription, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.RecyclableItem.ItemDescription, new { @class = "form-control", @value = Model.RecyclableItem.ItemDescription, @readonly = true })
                 @Html.ValidationMessageFor(m => m.RecyclableItem.ItemDescription, "", new { @class = "field-validation-error text-danger" })
             </div>
 
-            <button type="submit" class="btn btn-success mt-3">Add</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">Delete</button>
+                @Html.ActionLink("Cancel", "Index", "RecyclableItem", null, new { @class = "btn btn-warning" })
+            </div>
         }
     </div>
 </div>
-<!--/Form-->
-<!-- /Content -->

@@ -198,6 +198,8 @@
     <Content Include="Views\RecyclableType\Delete.cshtml" />
     <Content Include="Views\RecyclableItem\Add.cshtml" />
     <Content Include="Views\RecyclableItem\Index.cshtml" />
+    <Content Include="Views\RecyclableItem\Edit.cshtml" />
+    <Content Include="Views\RecyclableItem\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

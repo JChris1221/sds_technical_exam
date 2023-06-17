@@ -7,6 +7,8 @@ using System.Web;
 using sds_technical_exam.Models;
 using sds_technical_exam.Data;
 using System.Diagnostics;
+using System.Data.SqlClient;
+using System.Collections;
 
 namespace sds_technical_exam.Data
 {
@@ -18,7 +20,25 @@ namespace sds_technical_exam.Data
 
         public int Add(RecyclableItem entity)
         {
-            return 0;
+            int r;
+            string proc_name = "spInsert_Recyclable_Item";
+
+            var param = new Dictionary<string, object>{
+                    {"@recyclable_type_id", entity.RecyclableTypeId},
+                    {"@weight", entity.Weight},
+                    {"@item_description", entity.ItemDescription}
+                };
+            try
+            {
+                OpenDBConnection();
+                r = ExecuteStoredProc(proc_name, param);
+                CloseDBConnection();
+            }
+            catch
+            {
+                r = 0;
+            }
+            return r;
         }
 
         public IEnumerable<RecyclableItem> GetAll()
@@ -43,7 +63,7 @@ namespace sds_technical_exam.Data
                             RecyclableType = new RecyclableTypeRepository().GetEntityById(int.Parse(DataReader["RecyclableTypeId"].ToString())),
                             Weight = float.Parse(DataReader["Weight"].ToString()),
                             ComputedRate = float.Parse(DataReader["ComputedRate"].ToString()),
-                            ItemDescription = DataReader["Item Description"].ToString()
+                            ItemDescription = DataReader["ItemDescription"].ToString()
                         });
                     }
                 }
@@ -93,7 +113,7 @@ namespace sds_technical_exam.Data
                         RecyclableType = new RecyclableTypeRepository().GetEntityById(int.Parse(DataReader["RecyclableTypeId"].ToString())),
                         Weight = float.Parse(DataReader["Weight"].ToString()),
                         ComputedRate = float.Parse(DataReader["ComputedRate"].ToString()),
-                        ItemDescription = DataReader["Item Description"].ToString()
+                        ItemDescription = DataReader["ItemDescription"].ToString()
                     };
                 }
                 else
@@ -117,7 +137,30 @@ namespace sds_technical_exam.Data
 
         public bool Update(RecyclableItem entity)
         {
-            return true;
+            int r;
+            bool flag = true;
+            string proc_name = "spUpdate_Recyclable_Item";
+
+            var param = new Dictionary<string, object>{
+                    {"@id", entity.Id},
+                    {"@recyclable_type_id", entity.RecyclableTypeId},
+                    {"@weight", entity.Weight},
+                    {"@item_description", entity.ItemDescription}
+                };
+            try
+            {
+                OpenDBConnection();
+                r = ExecuteStoredProc(proc_name, param);
+                CloseDBConnection();
+                if (r <= 0)
+                    flag = false;
+            }
+            catch
+            {
+                flag = false;
+            }
+            return flag;
+            
         }
         public bool Delete(int id)
         {
@@ -152,6 +195,18 @@ namespace sds_technical_exam.Data
         }
         #endregion
         public bool IsExisting(int Id) => GetEntityById(Id) != null;
+
+        private int ExecuteStoredProc(string proc_name, IDictionary<string, object> parameters)
+        {
+            SqlCommand = new SqlCommand(proc_name, SqlConnection);
+            SqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+            foreach (var p in parameters)
+            {
+                SqlCommand.Parameters.AddWithValue(p.Key, p.Value);
+            }
+
+            return SqlCommand.ExecuteNonQuery();
+        }
 
     }
 }

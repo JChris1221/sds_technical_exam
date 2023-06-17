@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace sds_technical_exam.Models
 {
@@ -18,5 +20,21 @@ namespace sds_technical_exam.Models
         [Required]
         [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Invalid Decimal Format")]
         public float MaxKg { get; set; }
+
+        public static List<SelectListItem> ConvertToSelectList(List<RecyclableType> list)
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+
+            foreach (RecyclableType r in list)
+            {
+                listItems.Add(new SelectListItem
+                {
+                    Text = r.Type,
+                    Value = r.Id.ToString(),
+                    Selected = false,
+                });
+            }
+            return listItems;
+        }
     }
 }
