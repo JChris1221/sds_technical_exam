@@ -16,7 +16,7 @@ namespace sds_technical_exam
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "RecyclableItem", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "RecyclableType", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

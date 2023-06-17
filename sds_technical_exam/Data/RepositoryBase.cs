@@ -6,6 +6,7 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Diagnostics;
 
 namespace sds_technical_exam.Data
 {
@@ -16,7 +17,7 @@ namespace sds_technical_exam.Data
         protected SqlCommand SqlCommand;
         protected SqlDataReader DataReader;
 
-        protected readonly string connectionString = ConfigurationManager.ConnectionStrings["localDatabase"].ToString();
+        protected readonly string connectionString = ConfigurationManager.ConnectionStrings["localDB"].ToString();
 
         public RepositoryBase()
         {
@@ -36,6 +37,7 @@ namespace sds_technical_exam.Data
             }
             catch (Exception ex)
             {
+                Debug.Write(ex.Message);
                 return false;
             }
         }

@@ -7,6 +7,6 @@ namespace sds_technical_exam.ViewModels
 {
     public class RecyclableTypeViewModel
     {
-        Models.RecyclableType RecyclableType { get; set; }
+        public Models.RecyclableType RecyclableType { get; set; }
     }
 }
