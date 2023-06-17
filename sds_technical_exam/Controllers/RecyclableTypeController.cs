@@ -14,9 +14,12 @@ namespace sds_technical_exam.Controllers
         RecyclableTypeRepository RecyclableTypeRepository = new RecyclableTypeRepository();
         public ActionResult Index()
         {
-            List<RecyclableType> recyclableTypesList;
-            recyclableTypesList = RecyclableTypeRepository.GetAll().ToList();
-            return View(recyclableTypesList);
+            IEnumerable<RecyclableType> results = RecyclableTypeRepository.GetAll();
+
+            if(results == null)
+                return View(new List<RecyclableType>());
+            
+            return View(results.ToList());
         }
 
         [HttpGet]

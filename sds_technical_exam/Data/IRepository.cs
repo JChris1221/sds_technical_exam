@@ -9,12 +9,10 @@ namespace sds_technical_exam.Data
     {
         int Add(T entity);
         T GetEntityById(int id);
-        //T GetEntityByName(string name);
+        
         bool Update(T entity);
         bool Delete(int id);
         IEnumerable<T> GetAll();
         bool IsExisting(int id);
-        bool IsExisting(string name);
-
     }
 }

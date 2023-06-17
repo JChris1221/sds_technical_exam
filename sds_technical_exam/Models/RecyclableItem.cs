@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using sds_technical_exam.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace sds_technical_exam.Models
 {
@@ -11,14 +6,13 @@ namespace sds_technical_exam.Models
     {
         [Required]
         public int Id { get; set; }
-        
         public RecyclableType RecyclableType { get; set; }
         [Required]
         public int RecyclableTypeId { get; set; }
         [Required]
+        [RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Invalid Decimal Format")]
         public float Weight { get; set; }
         [Required]
-
         public float ComputedRate { get; set; }
         [Required]
         [StringLength(150)]

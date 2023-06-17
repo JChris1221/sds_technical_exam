@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\RecyclableItemController.cs" />
     <Compile Include="Controllers\RecyclableTypeController.cs" />
+    <Compile Include="Data\RecyclableItemRepository.cs" />
     <Compile Include="Data\RecyclableTypeRepository.cs" />
     <Compile Include="Data\RepositoryBase.cs" />
     <Compile Include="Data\IRepository.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Models\RecyclableItem.cs" />
     <Compile Include="Models\RecyclableType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\RecyclableItemViewModel.cs" />
     <Compile Include="ViewModels\RecyclableTypeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -194,10 +196,11 @@
     <Content Include="Views\RecyclableType\Add.cshtml" />
     <Content Include="Views\RecyclableType\Edit.cshtml" />
     <Content Include="Views\RecyclableType\Delete.cshtml" />
+    <Content Include="Views\RecyclableItem\Add.cshtml" />
+    <Content Include="Views\RecyclableItem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\RecyclableItem\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
