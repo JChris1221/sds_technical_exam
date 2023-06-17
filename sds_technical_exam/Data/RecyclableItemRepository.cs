@@ -208,5 +208,34 @@ namespace sds_technical_exam.Data
             return SqlCommand.ExecuteNonQuery();
         }
 
+        public int CheckTypeCount(int id)
+        {
+            string query = "SELECT Count(*) as [count] FROM [Recyclable_Item] WHERE RecyclableTypeId = @id";
+
+            try
+            {
+                OpenDBConnection();
+                var param = new Dictionary<string, object>()
+                {
+                    {"@id", id }
+                };
+
+                DataReader = ExecuteReader(query, param);
+
+                if (DataReader.HasRows)
+                {
+                    DataReader.Read();
+                    return int.Parse(DataReader["count"].ToString());
+                }
+                DataReader.Close();
+                CloseDBConnection();
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+            return -1;
+        }
+
     }
 }

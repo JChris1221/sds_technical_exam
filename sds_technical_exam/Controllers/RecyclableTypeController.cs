@@ -102,16 +102,25 @@ namespace sds_technical_exam.Controllers
         [HttpPost]
         public ActionResult Delete(int id, RecyclableTypeViewModel rtv)
         {
-            if (RecyclableTypeRepository.Delete(id))
+            int check = new RecyclableItemRepository().CheckTypeCount(id);
+            if(check == 0)
             {
-                TempData["SuccessMessage"] = "Record Deleted";
+                if (RecyclableTypeRepository.Delete(id))
+                {
+                    TempData["SuccessMessage"] = "Record Deleted";
+                }
+                else
+                {
+                    if (RecyclableTypeRepository.ErrorLog.Exception != null)
+                        TempData["ErrorMessage"] = RecyclableTypeRepository.ErrorLog.Exception.Message;
+                    else
+                        TempData["ErrorMessage"] = "Error Deleting Record";
+                }
+               
             }
             else
             {
-                if (RecyclableTypeRepository.ErrorLog.Exception != null)
-                    TempData["ErrorMessage"] = RecyclableTypeRepository.ErrorLog.Exception.Message;
-                else
-                    TempData["ErrorMessage"] = "Error Deleting Record";
+                TempData["ErrorMessage"] = "Cannot Delete Record. (Some Recyclable Items uses this type. Please delete the items before deleting this type)";
             }
             return RedirectToAction("Index");
         }
