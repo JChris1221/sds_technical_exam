@@ -27,7 +27,8 @@ namespace sds_technical_exam.Controllers
         public ActionResult Add()
         {
 
-            if(new RecyclableTypeRepository().GetAll().ToList().Count() == 0)
+            
+            if(new RecyclableTypeRepository().GetAll() == null)
             {
                 TempData["ErrorMessage"] = "Cannot add recyclable items without recyclable types (Please add recyclable types)";
                 return RedirectToAction("Index");
